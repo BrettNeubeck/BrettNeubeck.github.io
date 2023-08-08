@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Buffalo 311 Call Forecasting"
-subtitle: "Using Amirma, XGBOOST & FBProphet to Forecast Buffalo 311 Call valume per hour for the remainder of the year"
+subtitle: "Forecasting Buffalo 311 Call Volume Using AMIRA, FBProphet & XGBOOST"
 date: 2023-08-07
 background: '/img/posts/311-forecasting/Buffalo311Logo.jpg'
 #make sure to swicth image path to foward slashes if using windows
