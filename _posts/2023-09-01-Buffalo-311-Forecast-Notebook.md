@@ -2,7 +2,7 @@
 layout: post
 title: "Buffalo 311 Call Forecasting"
 subtitle: "Forecasting Buffalo 311 Call Volume Using AMIRA, FBProphet & XGBOOST"
-date: 2023-08-07
+date: 2023-09-01
 background: '/img/posts/311-forecasting/Buffalo311Logo.jpg'
 #make sure to swicth image path to foward slashes if using windows
 #BrettNeubeck.github.io\img\posts\311-forecasting\Buffalo311Logo2.jpg
