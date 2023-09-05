@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Bank Fraud Anomaly Detection"
-subtitle: "Anomaly Detection on UCU Cank data Augustin Lundy using SVM & Neural Networks"
+subtitle: "Anomaly Detection On UCU Bank Data Using SVM & Neural Networks"
 date: 2023-08-16
 background: '/img/posts/Bank-Fraud-Anomaly-Detection/BankFraud.jpg'
 #make sure to swicth image path to foward slashes if using windows
