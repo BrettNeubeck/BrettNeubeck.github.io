@@ -24,6 +24,7 @@ background: '/img/posts/Fraud-Detection/Anomalyimages.jpg'
 
 
 ## Import Packages
+<a id='import_python_packages'></a>
 
 
 ```python
@@ -63,7 +64,7 @@ uploaded = files.upload()
 
 
 ## Read CSV And Explore Column Names
-
+<a id='loading_data'></a>
 
 ```python
 # read in csv
@@ -138,7 +139,7 @@ print(df.info())
     
 
 ## Ratios & Value_Counts For Targets
-
+<a id='ratio'></a>
 
 ```python
 # count fraud anomolies
@@ -171,8 +172,8 @@ occ/len(df)
 
 
 
-# Explore Data In Graph Form
-
+## Explore Data In Graph Form
+<a id='graph'></a>
 
 ```python
 # function to prep data & segregate the targets from the features
@@ -263,12 +264,12 @@ plot_data(X_resampled, y_resampled)
 
 
     
-![png](img\posts\Fraud-Detection\output_20_0.png)
+![png](\img\posts\Fraud-Detection\output_20_0.png)
     
 
 
-# Compare Original Dataset to SMOTE Data set
-
+## Compare Original Dataset to SMOTE Data set
+<a id='smote'></a>
 
 ```python
 # compare ploot function
@@ -317,12 +318,14 @@ compare_plot(X, y, X_resampled, y_resampled, method='SMOTE')
 
 
 ## Reminder / Explanation Of Confusion Matrix
+<a id='confusion'></a>
 
 ![png](\img\posts\Fraud-Detection\ConfusionMatrixPic.jpg)
 
 ## Model Section
+<a id='models'></a>
 
-## Not Using SMOTE
+#### Not Using SMOTE
 
 
 ```python
@@ -358,7 +361,7 @@ print('Confusion matrix:\n', conf_mat)
      [   2    8]]
     
 
-# Using SMOTE
+#### Using SMOTE
 
 
 ```python
@@ -393,6 +396,7 @@ print('Confusion matrix:\n', conf_mat)
      [   3 1486]]
     
 
+#### Using Pipeline with SMOTE & Regression
 
 ```python
 # This is the pipeline module we need for this from imblearn
