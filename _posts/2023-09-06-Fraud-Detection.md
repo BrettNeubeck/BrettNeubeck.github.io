@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Fraud Detection Using SMOTE"
-subtitle: "Predicting Fraud Using Synthetic Minority Ovrsampling Technique "
+subtitle: "Predicting Fraud Using Synthetic Minority Oversampling Technique "
 date: 2023-09-06
 background: '/img/posts/Fraud-Detection/Anomalyimages.jpg'
 #make sure to swicth image path to foward slashes if using windows
