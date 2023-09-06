@@ -8,11 +8,7 @@ background: '/img/posts/Fraud-Detection/Anomalyimages.jpg'
 #BrettNeubeck.github.io\img\posts\311-forecasting\Buffalo311Logo2.jpg
 ---
 
-
-# Anomaly Detection Practice On Bank Fraud Using SMOTE
-
-<br>
-## Table of Contents
+### Table of Contents
 
 - [Import Packages](#import_python_packages)
 - [Read CSV And Explore Column Names](#loading_data)
@@ -23,7 +19,7 @@ background: '/img/posts/Fraud-Detection/Anomalyimages.jpg'
 - [Model Section](#models)
 
 
-## Import Packages
+### Import Packages
 <a id='import_python_packages'></a>
 
 
@@ -52,7 +48,7 @@ warnings.filterwarnings('ignore')
 
 ```
 
-## Upload File In GoogleColab
+### Upload File In GoogleColab
 
 
 ```python
@@ -63,7 +59,7 @@ uploaded = files.upload()
 ```
 
 
-## Read CSV And Explore Column Names
+### Read CSV And Explore Column Names
 <a id='loading_data'></a>
 
 ```python
@@ -138,7 +134,7 @@ print(df.info())
     None
     
 
-## Ratios & Value_Counts For Targets
+### Ratios & Value_Counts For Targets
 <a id='ratio'></a>
 
 ```python
@@ -172,7 +168,7 @@ occ/len(df)
 
 
 
-## Explore Data In Graph Form
+### Explore Data In Graph Form
 <a id='graph'></a>
 
 ```python
@@ -268,7 +264,7 @@ plot_data(X_resampled, y_resampled)
     
 
 
-## Compare Original Dataset to SMOTE Data set
+### Compare Original Dataset to SMOTE Data set
 <a id='smote'></a>
 
 ```python
@@ -317,12 +313,12 @@ compare_plot(X, y, X_resampled, y_resampled, method='SMOTE')
     
 
 
-## Reminder / Explanation Of Confusion Matrix
+### Reminder / Explanation Of Confusion Matrix
 <a id='confusion'></a>
 
 ![png](\img\posts\Fraud-Detection\ConfusionMatrixPic.jpg)
 
-## Model Section
+### Model Section
 <a id='models'></a>
 
 #### Not Using SMOTE
