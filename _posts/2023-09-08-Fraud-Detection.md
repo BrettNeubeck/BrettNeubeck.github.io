@@ -2,22 +2,46 @@
 layout: post
 title: "Fraud Detection Using SMOTE"
 subtitle: "Predicting Fraud Using Synthetic Minority Oversampling Technique "
-date: 2023-09-06
-background: '/img/posts/Fraud-Detection/Anomalyimages.jpg'
+date: 2023-09-08
+background: '/img/posts/Fraud-Detection-09-08/Anomalyimages.jpg'
 #make sure to swicth image path to foward slashes if using windows
 #BrettNeubeck.github.io\img\posts\311-forecasting\Buffalo311Logo2.jpg
 ---
 
 ### Table of Contents
 
+- [Summary](#summary)
 - [Import Packages](#import_python_packages)
-- [Read CSV And Explore Column Names](#loading_data)
-- [Ratios & Value_Counts For Targets](#ratio)
-- [Explore Data In Graph Form](#graph)
-- [Compare Original Dataset to SMOTE Data set](#smote)
-- [Explanation Of Confusion Matrix](#confusion)
-- [Model Section](#models)
+- [Read CSV & Explore Column Names](#loading_data)
+- [Ratios & Value_Counts for Targets](#ratio)
+- [Explore Data in Graph Form](#graph)
+- [Compare Original Dataset to SMOTE Dataset](#smote)
+- [Explanation of Confusion Matrix](#confusion)
+- [Model Section](#model)
+- [Conclusion](#conclusion)
 
+<br>
+### Summary
+<a id='summary'></a>
+
+Unbalanced datasets pose a common challenge in machine learning where the number of instances in one class significantly outweighs the other(s). This imbalance can lead to biased model performance, where the algorithm tends to favor the majority class, as it seeks to minimize overall error. To address this issue, techniques like minority oversampling and majority undersampling are often employed to rebalance the dataset and improve the model's ability to accurately classify minority class instances.
+
+**Minority Oversampling:**
+In minority oversampling, the goal is to increase the representation of the minority class by generating synthetic instances. One prominent method for this purpose is the Synthetic Minority Over-sampling Technique (SMOTE). SMOTE works by creating synthetic samples for the minority class by interpolating between existing data points. It selects a minority instance, identifies its k nearest neighbors, and generates new instances along the line segments connecting the chosen instance to its neighbors. This effectively augments the minority class and helps balance the dataset.
+
+**Majority Undersampling:**
+On the other hand, majority undersampling involves reducing the number of instances in the majority class to match the minority class. This can be done randomly or through more sophisticated techniques that carefully select instances to maintain the dataset's representativeness.
+
+**Challenges with Measurement:**
+Evaluating models trained on imbalanced datasets poses its own set of challenges. Traditional metrics like ROC AUC (Receiver Operating Characteristic Area Under the Curve) may not be the most appropriate choice in such cases because they can be overly optimistic. ROC AUC evaluates a model's ability to discriminate between classes across different thresholds, which can lead to inflated performance scores when the dataset is imbalanced.
+
+**Brier Score Loss:**
+Instead of ROC AUC, the Brier Score Loss is a more suitable metric for evaluating models on imbalanced datasets. The Brier Score measures the mean squared difference between the predicted probabilities and the actual outcomes. It rewards models for assigning high probabilities to the true positive instances, making it sensitive to class imbalance.
+
+**Confusion Matrix:**
+In addition to the Brier Score, the confusion matrix is a valuable tool for assessing model performance on unbalanced datasets. It breaks down the model's predictions into categories like true positives, true negatives, false positives, and false negatives, providing a clearer picture of how well the model is performing for each class. Metrics like precision, recall, and F1-score can be derived from the confusion matrix, offering a more balanced view of the model's accuracy across classes.
+
+In summary, unbalanced datasets are a common challenge in machine learning, and addressing this issue through techniques like SMOTE, majority undersampling, and appropriate evaluation metrics like the Brier Score Loss and the confusion matrix is crucial for building models that perform well on imbalanced data, especially when ROC AUC is not suitable due to class imbalance.
 
 ### Import Packages
 <a id='import_python_packages'></a>
@@ -32,6 +56,9 @@ import matplotlib.pyplot as plt
 # models
 from sklearn.linear_model import LogisticRegression
 from imblearn.over_sampling import SMOTE
+
+# pipeline from imblearn
+from imblearn.pipeline import Pipeline
 
 # model prep and evaluation
 from sklearn.model_selection import train_test_split
@@ -57,9 +84,8 @@ import io
 
 uploaded = files.upload()
 ```
-
-
-### Read CSV And Explore Column Names
+    
+### Read CSV & Explore Column Names
 <a id='loading_data'></a>
 
 ```python
@@ -134,11 +160,11 @@ print(df.info())
     None
     
 
-### Ratios & Value_Counts For Targets
+### Ratios & Value_Counts for Targets
 <a id='ratio'></a>
 
 ```python
-# count fraud anomolies
+# count fraud anomalies
 occ = df['Class'].value_counts()
 occ
 ```
@@ -168,7 +194,7 @@ occ/len(df)
 
 
 
-### Explore Data In Graph Form
+### Explore Data in Graph Form
 <a id='graph'></a>
 
 ```python
@@ -200,7 +226,7 @@ print(lines)
 
 
 ```python
-# create scatterplot function
+# create scatterplot function taking first two feature columns for x & y axis on graph
 def plot_data(X, y):
 	plt.scatter(X[y == 0, 0], X[y == 0, 1], label="Class #0", alpha=0.5, linewidth=0.15)
 	plt.scatter(X[y == 1, 0], X[y == 1, 1], label="Class #1", alpha=0.5, linewidth=0.15, c='r')
@@ -219,30 +245,16 @@ plot_data(X, y)
 
 
     
-![png](\img\posts\Fraud-Detection\output_15_0.png)
+![png](\img\posts\Fraud-Detection-09-08\output_17_0.png)
     
 
 
 
 ```python
-# anomaly data resampling methods --> over and under resampling
-# Undersampling majority class('non-fraud') / take random draws from non-fraud
-# drawback - throwing away data
-#
-# Oversampling minority class - take random draws from the fraud class and copy them to increase the amount of data
-# drawback copying data and training model on duplicate data
-```
-
-
-```python
-# oversampling using imlearn.over_sampling
-# SMOTE = synthetic Minority Ovrsampling Technique / uses knn to create new fraud cases
-```
-
-
-```python
+# oversampling using imlearn.over_sampling smote
+# SMOTE = Synthetic Minority Ovrsampling TEchnique / uses knn to create new fraud cases
 # initialize and define resampling method SMOTE
-# Synthetic Minority Ovrsampling Technique
+
 method = SMOTE()
 ```
 
@@ -260,27 +272,28 @@ plot_data(X_resampled, y_resampled)
 
 
     
-![png](\img\posts\Fraud-Detection\output_20_0.png)
+![png](\img\posts\Fraud-Detection-09-08\output_20_0.png)
     
 
 
-### Compare Original Dataset to SMOTE Data set
+### Compare Original Dataset to SMOTE Dataset
 <a id='smote'></a>
 
+
 ```python
-# compare ploot function
+# compare plot function
 def compare_plot(X,y,X_resampled,y_resampled, method):
-    # Start a plot figure
+    # start a plot figure
     f, (ax1, ax2) = plt.subplots(1, 2)
-    # sub-plot number 1, this is our normal data
+    # sub-plot number 1, normal data
     c0 = ax1.scatter(X[y == 0, 0], X[y == 0, 1], label="Class #0",alpha=0.5)
     c1 = ax1.scatter(X[y == 1, 0], X[y == 1, 1], label="Class #1",alpha=0.5, c='r')
     ax1.set_title('Original Data')
-    # sub-plot number 2, this is our oversampled data
+    # sub-plot number 2, oversampled data
     ax2.scatter(X_resampled[y_resampled == 0, 0], X_resampled[y_resampled == 0, 1], label="Class #0", alpha=.5)
     ax2.scatter(X_resampled[y_resampled == 1, 0], X_resampled[y_resampled == 1, 1], label="Class #1", alpha=.5,c='r')
     ax2.set_title(method)
-    # some settings and ready to go
+
     plt.figlegend((c0, c1), ('Class #0', 'Class #1'), loc='lower center',
                   ncol=2, labelspacing=0.)
     #plt.tight_layout(pad=3)
@@ -289,13 +302,13 @@ def compare_plot(X,y,X_resampled,y_resampled, method):
 
 
 ```python
-# Print the value_counts on the original labels y
+# print original value_counts
 print(pd.value_counts(pd.Series(y)))
 
-# Print the value_counts
+# print new value_counts
 print(pd.value_counts(pd.Series(y_resampled)))
 
-# Run compare_plot
+# print compare plot
 compare_plot(X, y, X_resampled, y_resampled, method='SMOTE')
 ```
 
@@ -309,39 +322,50 @@ compare_plot(X, y, X_resampled, y_resampled, method='SMOTE')
 
 
     
-![png](\img\posts\Fraud-Detection\output_23_1.png)
+![png](\img\posts\Fraud-Detection-09-08\output_24_1.png)
     
 
 
-### Reminder / Explanation Of Confusion Matrix
+### Reminder / Explanation of Confusion Matrix
 <a id='confusion'></a>
 
-![png](\img\posts\Fraud-Detection\ConfusionMatrixPic.jpg)
+![png](\img\posts\Fraud-Detection-09-08\ConfusionMatrixPic.jpg)
 
 ### Model Section
-<a id='models'></a>
+<a id='model'></a>
 
+<br>
 #### Not Using SMOTE
 
 
 ```python
-# Create the training and testing sets
+# plot impact of brier for single forecasts
+from sklearn.metrics import brier_score_loss
+
+# segragate labels and targets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
 
-# Fit a logistic regression model to our data
+# fit model
 model = LogisticRegression()
 model.fit(X_train, y_train)
 
-# Obtain model predictions
+# predict model
 predicted = model.predict(X_test)
-
-# Print the classifcation report and confusion matrix
+probs = model.predict_proba(X_test)
+# keep only the class 1 predictions
+probs=probs[:,1]
+#calculate bier score
+loss = brier_score_loss(y_test, probs)
+print('Brier Score Loss:\n', loss)
+# results
 print('Classification report:\n', classification_report(y_test, predicted))
 conf_mat = confusion_matrix(y_true=y_test, y_pred=predicted)
 print('Confusion matrix:\n', conf_mat)
 
 ```
 
+    Brier Score Loss:
+     0.0018169696384545437
     Classification report:
                    precision    recall  f1-score   support
     
@@ -357,26 +381,53 @@ print('Confusion matrix:\n', conf_mat)
      [   2    8]]
     
 
+
+```python
+from sklearn.metrics import brier_score_loss
+```
+
+
+```python
+from sklearn.metrics import RocCurveDisplay
+
+RocCurveDisplay.from_estimator(model, X_test, y_test)
+plt.show()
+```
+
+
+    
+![png](\img\posts\Fraud-Detection-09-08\output_31_0.png)
+    
+
+
 #### Using SMOTE
 
 
 ```python
-# Create the training and testing sets
+# segragate labels and targets
 X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=.30, random_state=0)
 
-# Fit a logistic regression model to our data
+# fit model
 model = LogisticRegression()
 model.fit(X_train, y_train)
 
-# Obtain model predictions
+# predict model
 predicted = model.predict(X_test)
+probs = model.predict_proba(X_test)
+# keep only the class 1 predictions
+probs=probs[:,1]
+#calculate bier score
+loss = brier_score_loss(y_test, probs)
+print('Brier Score Loss:\n', loss)
 
-# Print the classifcation report and confusion matrix
+# results
 print('Classification report:\n', classification_report(y_test, predicted))
 conf_mat = confusion_matrix(y_true=y_test, y_pred=predicted)
 print('Confusion matrix:\n', conf_mat)
 ```
 
+    Brier Score Loss:
+     0.002725477458352906
     Classification report:
                    precision    recall  f1-score   support
     
@@ -388,50 +439,105 @@ print('Confusion matrix:\n', conf_mat)
     weighted avg       1.00      1.00      1.00      3000
     
     Confusion matrix:
-     [[1504    7]
-     [   3 1486]]
+     [[1506    5]
+     [   4 1485]]
     
 
-#### Using Pipeline with SMOTE & Regression
 
 ```python
-# This is the pipeline module we need for this from imblearn
-from imblearn.pipeline import Pipeline
+from sklearn.metrics import RocCurveDisplay
 
-# Define which resampling method and which ML model to use in the pipeline
+RocCurveDisplay.from_estimator(model, X_test, y_test)
+plt.show()
+```
+
+
+    
+![png](\img\posts\Fraud-Detection-09-08\output_34_0.png)
+    
+
+
+
+```python
+# define resampling method & model for the pipeline
 resampling = SMOTE()
 model = LogisticRegression()
 
-# Define the pipeline, tell it to combine SMOTE with the Logistic Regression model
+# define the pipeline
 pipeline = Pipeline([('SMOTE', resampling), ('Logistic Regression', model)])
 ```
 
 
 ```python
-# Split your data X and y, into a training and a test set and fit the pipeline onto the training data
+# segragate labels and targets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.30, random_state=0)
 
-# Fit your pipeline onto your training set and obtain predictions by fitting the model onto the test data
+# fit & predict pipeline
 pipeline.fit(X_train, y_train)
 predicted = pipeline.predict(X_test)
-
-# Obtain the results from the classification report and confusion matrix
+probs = model.predict_proba(X_test)
+# keep only the class 1 predictions
+probs=probs[:,1]
+#calculate bier score
+loss = brier_score_loss(y_test, probs)
+print('Brier Score Loss:\n', loss)
+print()
+# results
 print('Classifcation report:\n', classification_report(y_test, predicted))
 conf_mat = confusion_matrix(y_true=y_test, y_pred=predicted)
 print('Confusion matrix:\n', conf_mat)
 ```
 
+    Brier Score Loss:
+     0.002822190433164936
+    
     Classifcation report:
                    precision    recall  f1-score   support
     
              0.0       1.00      1.00      1.00      1505
-             1.0       0.54      0.70      0.61        10
+             1.0       0.73      0.80      0.76        10
     
-        accuracy                           0.99      1515
-       macro avg       0.77      0.85      0.80      1515
-    weighted avg       0.99      0.99      0.99      1515
+        accuracy                           1.00      1515
+       macro avg       0.86      0.90      0.88      1515
+    weighted avg       1.00      1.00      1.00      1515
     
     Confusion matrix:
-     [[1499    6]
-     [   3    7]]
+     [[1502    3]
+     [   2    8]]
     
+
+
+```python
+from sklearn.metrics import RocCurveDisplay
+
+RocCurveDisplay.from_estimator(model, X_test, y_test)
+plt.show()
+```
+
+
+    
+![png](\img\posts\Fraud-Detection-09-08\output_37_0.png)
+    
+
+
+### Conclusion
+
+Based on the results obtained from the classification model with a pipeline using SMOTE resampling and logistic regression, we can draw the following conclusions:
+
+1. **Brier Score Loss**: The Brier Score Loss is a measure of the accuracy of probability predictions, and in this case, it is exceptionally low, indicating that the model's predicted probabilities are very close to the actual outcomes. With a Brier Score Loss of approximately 0.0024, the model's probability predictions are highly accurate.
+
+2. **Classification Report**:
+   - **Precision**: The precision for class 1 (positive class) is 0.73, which means that when the model predicts a positive outcome, it is correct about 73% of the time.
+   - **Recall**: The recall for class 1 is 0.80, indicating that the model correctly identifies 80% of the actual positive instances.
+   - **F1-Score**: The F1-score, which balances precision and recall, is 0.76 for class 1. It provides a single metric to evaluate the model's overall performance.
+   - **Accuracy**: The overall accuracy of the model is 100%, which might be a bit misleading due to the class imbalance. It's crucial to consider other metrics, especially when dealing with imbalanced datasets.
+
+3. **Confusion Matrix**: The confusion matrix provides a more detailed view of the model's performance:
+   - True Positives (TP): 8
+   - True Negatives (TN): 1502
+   - False Positives (FP): 3
+   - False Negatives (FN): 2
+
+   The model correctly identifies most of the positive cases (TP), with very few false positives and false negatives. This suggests that the model is effective at distinguishing the positive class from the negative class.
+
+In summary, the model shows strong performance in terms of Brier Score Loss, precision, recall, and F1-score for the positive class. However, it's important to note that the dataset appears to be highly imbalanced, with a significantly larger number of negative class instances.
