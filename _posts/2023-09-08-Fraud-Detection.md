@@ -24,7 +24,9 @@ background: '/img/posts/Fraud-Detection-09-08/Anomalyimages.jpg'
 ### Summary
 <a id='summary'></a>
 
-Unbalanced datasets pose a common challenge in machine learning where the number of instances in one class significantly outweighs the other(s). This imbalance can lead to biased model performance, where the algorithm tends to favor the majority class, as it seeks to minimize overall error. To address this issue, techniques like minority oversampling and majority undersampling are often employed to rebalance the dataset and improve the model's ability to accurately classify minority class instances.
+This project serves as a comprehensive demonstration of anomaly detection techniques applied to a credit card fraud dataset. In the realm of machine learning, unbalanced datasets present a prevalent challenge, characterized by a significant disparity in the number of instances between different classes. This disparity often results in a skewed model performance, wherein the algorithm exhibits a preference for the majority class while striving to minimize overall error.
+
+To effectively tackle this issue, various methodologies have been developed, with minority oversampling and majority undersampling being prominent strategies. These techniques are routinely leveraged to rectify dataset imbalances, enhancing the model's capacity to precisely classify instances belonging to the minority class.
 
 **Minority Oversampling:**
 In minority oversampling, the goal is to increase the representation of the minority class by generating synthetic instances. One prominent method for this purpose is the Synthetic Minority Over-sampling Technique (SMOTE). SMOTE works by creating synthetic samples for the minority class by interpolating between existing data points. It selects a minority instance, identifies its k nearest neighbors, and generates new instances along the line segments connecting the chosen instance to its neighbors. This effectively augments the minority class and helps balance the dataset.
