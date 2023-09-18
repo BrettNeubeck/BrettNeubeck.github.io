@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "City of Buffalo Crime EDA & Forecasting"
-subtitle: "Predicting Crime Sourcing Data From Buffalo OpenData API "
+subtitle: "Sourcing Data From Buffalo OpenData API To Predict Crime"
 date: 2023-09-12
 background: '/img/posts/Buffalo-Crime/BuffaloCrimeCover.jpg'
 #make sure to swicth image path to foward slashes if using windows

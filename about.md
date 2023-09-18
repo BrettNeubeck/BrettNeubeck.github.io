@@ -5,7 +5,7 @@ description: This is what I do.
 background: '/img/bg-about.jpg'
 ---
 
-Brett Neubeck is a highly skilled and experienced finance and data professional with a strong background in coding, machine learning, data visualization, software tools, and business analytics. He has a proven track record of successfully managing projects, meeting deadlines, and delivering results while keeping a keen eye on key performance indicators (KPIs) and project management.
+Brett Neubeck is a highly skilled and experienced structured finance and data professional with a strong background in coding, machine learning, data visualization, software tools, and business analytics. He has a proven track record of successfully managing projects, meeting deadlines, and delivering results while keeping a keen eye on key performance indicators (KPIs) and project management.
 
 Throughout his academic and professional journey, he has demonstrated a strong understanding of business analytics principles and methodologies. He is adept at identifying relevant KPIs and metrics to measure the performance and success of projects. He has utilized his data analysis skills to extract actionable insights from complex datasets and translate them into meaningful business recommendations.
 

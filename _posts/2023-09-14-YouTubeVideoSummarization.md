@@ -44,7 +44,7 @@ The primary goal of this project was to develop a Python script capable of summa
    - If required, audio splicing (similar to sampling a record) is performed to extract the relevant portion of the audio.
 
 4. **Automatic Speech Recognition (ASR):**
-   - The Whisper ASR model, available through Hugging Face Transformers, is utilized to transcribe the audio feed.
+   - The Whisper ASR model, is utilized to transcribe the audio feed.
    - Whisper converts the spoken words in the video into text, enabling further analysis.
 
 5. **Text Summarization with NLP:**
