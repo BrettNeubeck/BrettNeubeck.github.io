@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "YouTube Video Summary"
-subtitle: "YouTube Video Summarization using Hugging Face Transformers and Whisper ASR"
+subtitle: "YouTube Video Summarization Using Hugging Face Transformers & Whisper ASR"
 date: 2023-09-14
 background: '/img/posts/YouTube/YouTubePic.jpg'
 
