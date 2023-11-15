@@ -20,7 +20,7 @@ background: '/img/posts/Redfin-Housing-Sales/Redfinlogo.png'
 ### Summary
 <a id='summary'></a>
 
-In this post, we explore real estate market trends in New York State using Python and Tableau. We leverage various Python libraries such as pandas, numpy, matplotlib, seaborn, and others to analyze and visualize the data. Our primary data source is a Redfin market tracker dataset for zip codes, which we load and process to gain insights into the real estate market.
+In this post, we explore real estate market trends in Erie County using Python and Tableau. We leverage various Python libraries such as pandas, numpy, matplotlib, seaborn, and others to analyze and visualize the data. Our primary data source is a Redfin market tracker dataset for zip codes, which we load and process to gain insights into the real estate market.
 
 Data Loading and Exploration:
 We start by importing necessary packages and loading the dataset from the Redfin market tracker. The dataset is a comprehensive source of information, and we print the number of rows, columns, and display the first few rows to get a glimpse of the data.
